@@ -90,7 +90,6 @@ class TestIgorIBW(unittest.TestCase):
         file_path = root_path + file_metadata)
         img_metadata_out = 'img_metadata.p'
         urllib.request.urlretrieve(file_path, img_metadata_out)
-        wget.download(file_path, out=img_metadata_out)
         true_metadata = pickle.load(open(img_metadata_out, 'rb'))
         received_metadata = dataset.original_metadata
         for key in true_metadata: 
