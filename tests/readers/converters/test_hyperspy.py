@@ -16,7 +16,7 @@ import sidpy
 """
 try:
     import hyperspy.api as hs
-    import hyperspy.datasets.artificial_data as ad
+    import hyperspy.data.artificial_data as ad
 except ModuleNotFoundError:
     hs = None
     ad = None
@@ -28,7 +28,7 @@ print(SciFiReaders.__version__)
 
 class TestHyperspy(unittest.TestCase):
     def test_signal_1d(self):
-        s = ad.get_low_loss_eels_signal()
+        s = ad.g()
         self.assertTrue(s.metadata.Signal.signal_type == 'EELS')
         dataset = SciFiReaders.convert_hyperspy(s)
         self.assertIsInstance(dataset, sidpy.Dataset)
