@@ -42,7 +42,7 @@ class TestIgorIBW(unittest.TestCase):
 
         #Load the metadata
         file_metadata = 'orig_dict.p?raw=true'
-        file_path = root_path + file_metadata)
+        file_path = root_path + file_metadata
         metadata_out = 'cits_metadata.p'
         urllib.request.urlretrieve(file_path, metadata_out)
         true_metadata = pickle.load(open(metadata_out, 'rb'))
