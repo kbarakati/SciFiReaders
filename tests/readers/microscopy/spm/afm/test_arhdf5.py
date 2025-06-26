@@ -1,7 +1,6 @@
 import pytest
 import sidpy
 import SciFiReaders as sr
-from pywget import wget
 import os
 import gdown
 try:

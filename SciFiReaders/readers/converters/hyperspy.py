@@ -49,6 +49,10 @@ def convert_hyperspy(s):
                 dimension_type = 'spatial'
             else:
                 dimension_type = 'spectral'
+            if 'scale' not in axis:
+                axis['scale'] = 1.0
+            if 'offset' not in axis:
+                axis['offset'] = 0.0    
             dim_array = np.arange(axis['size']) * axis['scale'] + axis['offset']
             if axis['units'] == '':
                 axis['units'] = 'frame'

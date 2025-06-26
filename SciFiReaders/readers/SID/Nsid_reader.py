@@ -6,19 +6,12 @@ Created on Fri May 22 16:29:25 2020
 
 @author: Gerd Duscher, Suhas Somnath, Maxim Ziadtinov
 """
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
 
-import sys
 
 import h5py
 import sidpy
 
-try:
-    from pyNSID.io.hdf_utils import check_if_main, get_all_main, \
-        read_h5py_dataset
-except ModuleNotFoundError:
-    check_if_main = get_all_main = read_h5py_dataset = None
+from .hdf_utils import check_if_main, get_all_main, read_h5py_dataset
 
 
 class NSIDReader(sidpy.Reader):

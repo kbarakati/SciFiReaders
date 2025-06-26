@@ -9,8 +9,7 @@ First Version 11/19/2021
 import unittest
 import sys
 import os
-from pywget import wget
-
+import urllib
 
 sys.path.insert(0, "../../../../../SciFiReaders/")
 import SciFiReaders
@@ -23,7 +22,8 @@ class TestNionReader(unittest.TestCase):
 
     def test_load_nion_h5_file(self):
         # Test if the test h5 file can be read in correctly
-        file_name = wget.download(data_path + '/NionReader_ImageStack_STO_HAADF.h5')
+        file_name = 'NionReader_ImageStack_STO_HAADF.h5'
+        urllib.request.urlretrieve(data_path + file_name, file_name)
         reader = SciFiReaders.NionReader(file_name)
         datasets = reader.read()
         dataset = datasets['Channel_000']
@@ -41,7 +41,8 @@ class TestNionReader(unittest.TestCase):
 
     def test_load_nion_ndata_file(self):
         # Test if the test ndata file can be read in correctly
-        file_name = wget.download(data_path + '/NionReader_Image_STO_HAADF.ndata')
+        file_name = 'NionReader_Image_STO_HAADF.ndata'
+        urllib.request.urlretrieve(data_path + file_name, file_name)
         reader = SciFiReaders.NionReader(file_name)
         datasets = reader.read()
         dataset = datasets['Channel_000']
@@ -68,7 +69,8 @@ class TestNionReader(unittest.TestCase):
 
     def test_load_wrong_file(self):
         # Test behaviour of wrong data file
-        file_name = wget.download(data_path + '/DMReader_Image_SI-Survey.dm3')
+        file_name = 'DMReader_Image_SI-Survey.dm3'
+        urllib.request.urlretrieve(data_path + file_name, file_name)
         reader = SciFiReaders.NionReader(file_name)
         datasets = reader.read()
         dataset = datasets['Channel_000']

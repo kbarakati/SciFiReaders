@@ -1,7 +1,8 @@
 import unittest
 import sys
+import urllib.request
 import sidpy
-from pywget import wget
+import urllib
 import os
 sys.path.append("../../../../../SciFiReaders/")
 import SciFiReaders as sr
@@ -14,7 +15,7 @@ class TestBruker(unittest.TestCase):
     def test_load_test_bruker_force_file(self):
         # Test if the force curve file can be successfully read
         file_path = 'force_bruker.001'
-        wget.download(root_path + "/BrukerReader_ForceCurve_Sapphire_TAP525.001?raw=true", out=file_path)
+        urllib.request.urlretrieve(root_path + "/BrukerReader_ForceCurve_Sapphire_TAP525.001?raw=true", file_path)
         data_translator = sr.BrukerAFMReader(file_path)
         datasets = data_translator.read(verbose=False)
         assert len(datasets) == 2, "Length of dataset should be 2 but is instead {}".format(len(datasets))
@@ -32,7 +33,7 @@ class TestBruker(unittest.TestCase):
     def test_load_test_bruker_image_file(self):
         # Test if the Bruker images file can be read in correctly
         file_path = 'image_bruker.001'
-        wget.download(root_path + "/BrukerReader_Image.001?raw=true", out=file_path)
+        urllib.request.urlretrieve(root_path + "/BrukerReader_Image.001?raw=true", file_path)
 
         data_translator = sr.BrukerAFMReader(file_path)
         datasets = data_translator.read(verbose=True)

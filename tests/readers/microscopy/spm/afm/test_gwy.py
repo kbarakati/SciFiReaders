@@ -1,7 +1,7 @@
 import pytest
 import sidpy
 import SciFiReaders as sr
-from pywget import wget
+import urllib
 import os
 try:
     import gwyfile
@@ -13,7 +13,7 @@ root_path = "https://github.com/pycroscopy/SciFiDatasets/blob/main/data/microsco
 @pytest.fixture
 def gwy_file():
     file_path = 'PTO_110_Virgin0001.gwy'
-    wget.download(root_path + "/PTO_110_Virgin0001.gwy?raw=true", out=file_path)
+    urllib.request.urlretrieve(root_path + "/PTO_110_Virgin0001.gwy?raw=true", file_path)
     yield file_path
     os.remove(file_path)
 

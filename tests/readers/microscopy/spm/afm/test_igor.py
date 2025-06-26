@@ -2,7 +2,7 @@ import unittest
 import sys
 import pytest
 import sidpy
-from pywget import wget
+import urllib
 import os
 import pickle
 import numpy as np
@@ -21,7 +21,7 @@ class TestIgorIBW(unittest.TestCase):
         file_cits = '20230110-152047_ScV6Sn6-2023-01-10-STM_NANOPROBE_AtomManipulation--37_1-Aux2(V) 3_Forward_Down_Trace.ibw?raw=true'
         file_path = os.path.join(root_path, file_cits)
         file_out = 'cits_file.ibw'
-        wget.download(file_path, out=file_out)
+        urllib.request.urlretrieve(file_path, file_out)
         reader = sr.IgorMatrixReader(file_out)
         dataset = reader.read()
 
@@ -66,7 +66,7 @@ class TestIgorIBW(unittest.TestCase):
         file_cits = '20230110-152047_ScV6Sn6-2023-01-10-STM_NANOPROBE_AtomManipulation--37_1-I 3_Backward_Down.ibw?raw=true'
         file_path = os.path.join(root_path, file_cits)
         file_out = 'img_file.ibw'
-        wget.download(file_path, out=file_out)
+        urllib.request.urlretrieve(file_path, file_out)
         reader = sr.IgorMatrixReader(file_out)
         dataset = reader.read()
 
@@ -112,7 +112,7 @@ class TestIgorIBW(unittest.TestCase):
 
         file_path = 'force_ibw.ibw'
         # Download the required files
-        wget.download(root_path + "/IgorIBWReader_ForceCurve.ibw?raw=true", out=file_path)
+        urllib.request.urlretrieve(root_path + "/IgorIBWReader_ForceCurve.ibw?raw=true", file_path) 
 
         data_translator = sr.IgorIBWReader(file_path)
         datasets = data_translator.read(verbose=False)
@@ -773,7 +773,7 @@ class TestIgorIBW(unittest.TestCase):
         #Test if the IGOR Image IBW file can be read in correctly
 
         file_path = 'image_ibw.ibw'
-        wget.download(root_path + "/IgorIBWReader_ImageStack_BTFO_DSO.ibw?raw=true", out=file_path)
+        urllib.request.urlretrieve(root_path + "/IgorIBWReader_ImageStack_BTFO_DSO.ibw?raw=true", file_path)
 
         data_translator = sr.IgorIBWReader(file_path)
         datasets = data_translator.read(verbose=True)

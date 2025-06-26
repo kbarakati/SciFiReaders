@@ -133,3 +133,7 @@ data/fei_emd_si.emd
 data/P0089OP0027.ibw
 examples/example_data/EELS_STO.dm3
 data/STS_grid_lockin.3ds
+PEA_BDA_film-1.axz
+PEA_BDA_film.axz.zip
+relax_test_data2.h5
+vpfm_data.h5

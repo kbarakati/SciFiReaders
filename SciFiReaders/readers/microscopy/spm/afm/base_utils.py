@@ -54,5 +54,5 @@ def read_binary_data(file_path, offset, num_bytes, bytes_per_data_point):
 
     with open(file_path, "rb") as file_handle:
         file_handle.seek(offset)
-        value = np.fromstring(file_handle.read(num_bytes), dtype=dtype)
+        value = np.frombuffer(file_handle.read(num_bytes), dtype=dtype)
     return value

@@ -1,7 +1,7 @@
 import unittest
 import sys
 import sidpy
-from pywget import wget
+import urllib
 import os
 sys.path.append("../../../../../SciFiReaders/")
 import SciFiReaders as sr
@@ -15,7 +15,7 @@ perm_link = r"https://github.com/pycroscopy/SciFiDatasets/raw/main/data/microsco
 # ssl._create_default_https_context = ssl._create_unverified_context
 
 def download_file(url, output_filename):
-    subprocess.run(["wget","--continue", "-O", output_filename, url])
+    urllib.request.urlretrieve(url, output_filename)
 def unzip_archive(archive_path, extract_dir):
     with zipfile.ZipFile(archive_path, 'r') as zip_ref:
         zip_ref.extractall(extract_dir)
