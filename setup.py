@@ -17,8 +17,7 @@ requirements = [  # basic
                 'cytoolz',  # dask installation failing without this
                 'dask>=2.20.0',
                 'sidpy>=0.11.2',
-                'numba==0.58; python_version < "3.10"',
-                'numba>=0.59.0rc1; python_version >= "3.10"',
+                'numba',
                 'ipython>=7.1.0',
                 'pyUSID',
                 'gdown',
@@ -44,6 +43,8 @@ setuptools.setup(
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
+        'Programming Language :: Python :: 3.13',
         'Programming Language :: Python :: Implementation :: CPython',
         'Topic :: Scientific/Engineering :: Information Analysis'],
     keywords=['imaging', 'spectra', 'multidimensional', 'scientific'],
