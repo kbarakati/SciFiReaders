@@ -87,7 +87,7 @@ class TestIgorIBW(unittest.TestCase):
 
         #Load the metadata
         file_metadata = 'image_dict.p?raw=true'
-        file_path = root_path + file_metadata)
+        file_path = root_path + file_metadata
         img_metadata_out = 'img_metadata.p'
         urllib.request.urlretrieve(file_path, img_metadata_out)
         true_metadata = pickle.load(open(img_metadata_out, 'rb'))
