@@ -23,7 +23,6 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: Implementation :: CPython",
     "Topic :: Scientific/Engineering :: Information Analysis"
@@ -31,7 +30,7 @@ classifiers = [
 requires-python = ">=3.9"
 dependencies = [
     "setuptools",
-    "numpy>=2.0",
+    "numpy",
     "toolz",
     "cytoolz",
     "dask>=2.20.0",
