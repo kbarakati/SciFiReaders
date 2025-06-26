@@ -19,7 +19,7 @@ class TestIgorIBW(unittest.TestCase):
     def test_igor_matrix_file_cits(self):
         #Test the CITS file reads correctly
         file_cits = '20230110-152047_ScV6Sn6-2023-01-10-STM_NANOPROBE_AtomManipulation--37_1-Aux2(V) 3_Forward_Down_Trace.ibw?raw=true'
-        file_path = os.path.join(root_path, file_cits)
+        file_path =root_path + file_cits
         file_out = 'cits_file.ibw'
         urllib.request.urlretrieve(file_path, file_out)
         reader = sr.IgorMatrixReader(file_out)
