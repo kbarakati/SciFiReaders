@@ -92,7 +92,7 @@ def get_bruker_dictionary(filename):
                             tags['detector']['layers'][child2.tag]['thickness'] = float(
                                 child2.attrib["Thickness"]) * 1e-6  # now in m
                             if 'RelativeArea' in child2.attrib:
-                                tags['detector']['window'][child2.tag]['relative_area'] = float(
+                                tags['detector']['layers'][child2.tag]['relative_area'] = float(
                                     child2.attrib["RelativeArea"])
                     else:
                         if child.tag != 'ResponseFunction':
@@ -203,7 +203,7 @@ def get_spectrum(tags, key=0):
                                              dimension_type='spectral'))
 
     dataset.metadata['experiment'] = tags['esma'].copy()
-    tags['detector']['windows']['layers'] = tags['detector']['windows']['layers']
+    tags['experiment']['acceleration_voltage'] =  float(tags['experiment']['PrimaryEnergy'])*1000.
     dataset.metadata['EDS'] = {'detector': tags['detector']}
     dataset.metadata['EDS']['results'] = {}
     for key, result in spectrum['results'].items():

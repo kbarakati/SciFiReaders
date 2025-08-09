@@ -370,6 +370,7 @@ class EMDReader(sidpy.Reader):
                 experiment['sample'] = metadata['Sample']['SampleDescription']
             if 'SampleId' in metadata['Sample']:
                 experiment['sample_id'] = metadata['Sample']['SampleId']
+        eds = {}
         if 'Detectors' in metadata:
             used_detector = experiment['detector']
             for detector in metadata['Detectors'].values():
@@ -380,8 +381,23 @@ class EMDReader(sidpy.Reader):
                             end = detector['CollectionAngleRange']['end']
                             experiment['collection_angle'] = float(begin)
                             experiment['collection_angle_end'] = float(end)
+                        if 'SuperX' in detector['DetectorName']:
+                            eds = {'detector': {'layers': {13: {'thickness': 0.05*1e-6, 'Z': 13, 'element': 'Al'}},
+                                                'SiDeadThickness': .13 *1e-6,  # in m
+                                                'SiLiveThickness': 0.05 , # in m
+                                                'detector_area': 30 * 1e-6, #in m2
+                                                'energy_resolution': 125,  # in eV
+                                                'start_energy': int(detector['BeginEnergy']),  # in eV
+                                                'start_channel': np.searchsorted(self.datasets[key].energy_scale.values, int(detector['BeginEnergy'])),
+                                                'ElevationAngle': float(detector['ElevationAngle']), 
+                                                'AzimuthAngle': float(detector['AzimuthAngle']),
+                                                'RealTime': float(detector['RealTime']), 
+                                                'LiveTime': float(detector['LiveTime'])}}
         
-        self.datasets[key].metadata['experiment'] = experiment
+        self.datasets[key].metadata['experiment'] = experiment.copy()
+        if len(eds) > 0:
+            self.datasets[key].metadata['EDS'] = eds.copy()
+
         if self.datasets[key].title == 'generic':
             self.datasets[key].title = experiment['detector']
 
@@ -403,4 +419,3 @@ def get_stream(data, size, data_stream, bin):
         else:
             data[pixel_number, int(value/bin-0.2)] += 1
     return data, frame
-
