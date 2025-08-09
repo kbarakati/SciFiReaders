@@ -328,11 +328,11 @@ class IgorIBWReader(Reader):
                 #Add dimension info
                 data_set.set_dimension(0, sid.Dimension(np.linspace(0, parm_dict['FastScanSize'], num_cols),
                                                         name = 'x',
-                                                        units='m', quantity = 'x',
+                                                        units=chan_units[channel], quantity = 'x',
                                                         dimension_type='spatial'))
                 data_set.set_dimension(1, sid.Dimension(np.linspace(0, parm_dict['SlowScanSize'], num_rows),
                                                         name = 'y',
-                                                        units='m', quantity='y',
+                                                        units=chan_units[channel], quantity='y',
                                                         dimension_type='spatial'))
 
                 # append metadata
