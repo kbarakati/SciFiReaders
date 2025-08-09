@@ -1,9 +1,6 @@
 hyperspy
 igor2
-pyUSID
 pyNSID
 gwyfile
 pillow
 tifffile
-numpy==1.24.4
-numba==0.57.1
