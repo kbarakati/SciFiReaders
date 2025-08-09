@@ -9,7 +9,7 @@ import unittest
 import numpy as np
 import sys
 import os
-from pywget import wget
+import urllib
 
 import sidpy
 
@@ -23,7 +23,8 @@ data_path = 'https://raw.githubusercontent.com/pycroscopy/SciFiDatasets/main/dat
 class TestEMDReader(unittest.TestCase):
 
     def test_data_available(self):
-        file_name = wget.download(data_path + '/EMDReader_Spectrum_FEI.emd')
+        file_name = 'EMDReader_Spectrum_FEI.emd'
+        urllib.request.urlretrieve(data_path + file_name, file_name)
         emd_reader = SciFiReaders.EMDReader(file_name)
 
         self.assertIsInstance(emd_reader, sidpy.Reader)
@@ -31,7 +32,8 @@ class TestEMDReader(unittest.TestCase):
         os.remove(file_name)
 
     def test_read_spectrum(self):
-        file_name = wget.download(data_path + 'EMDReader_Spectrum_FEI.emd')
+        file_name = 'EMDReader_Spectrum_FEI.emd'
+        urllib.request.urlretrieve(data_path + file_name, file_name)
         emd_reader = SciFiReaders.EMDReader(file_name)
         datasets = emd_reader.read()
         dataset = datasets['Channel_000']
@@ -280,7 +282,8 @@ class TestEMDReader(unittest.TestCase):
         
 
     def test_read_image(self):
-        file_name  = wget.download(data_path + '/EMDReader_Image_FEI.emd')
+        file_name  = 'EMDReader_Image_FEI.emd'
+        urllib.request.urlretrieve(data_path + file_name, file_name)
         emd_reader = SciFiReaders.EMDReader(file_name)
         datasets = emd_reader.read()
         dataset = datasets['Channel_000']
@@ -308,7 +311,8 @@ class TestEMDReader(unittest.TestCase):
         
 
     def test_read_spectrum_image(self):
-        file_name  = wget.download(data_path + '/EMDReader_SpectrumImage_Si.emd')
+        file_name  = 'EMDReader_SpectrumImage_Si.emd'
+        urllib.request.urlretrieve(data_path + file_name, file_name)
         emd_reader = SciFiReaders.EMDReader(file_name)
         datasets = emd_reader.read()
         dataset = datasets['Channel_001']

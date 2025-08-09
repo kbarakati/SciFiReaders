@@ -9,8 +9,9 @@ First Version 11/19/2021
 import unittest
 import sys
 import os
-from pywget import wget
-
+import urllib
+import urllib.parse
+import urllib.request
 sys.path.insert(0,"../../../../../../SciFiReaders/")
 import SciFiReaders
 
@@ -23,7 +24,9 @@ class TestDMReader(unittest.TestCase):
 
     def test_load_dm3_file(self):
         # Test if the test dm3 file can be read in correctly
-        file_name = wget.download(data_path + '/DMReader_EELS_STO.dm3')
+
+        file_name = 'DMReader_EELS_STO.dm3'
+        urllib.request.urlretrieve(data_path + file_name, file_name)
         reader = SciFiReaders.DMReader(file_name)
         datasets = reader.read()
         print(datasets)
@@ -39,7 +42,8 @@ class TestDMReader(unittest.TestCase):
         os.remove(file_name)
 
     def test_load_dm4_file(self):
-        file_name = wget.download(data_path + '/DMReader_EELS_STO.dm4')
+        file_name = 'DMReader_EELS_STO.dm4'
+        urllib.request.urlretrieve(data_path + file_name, file_name)
         reader = SciFiReaders.DMReader(file_name, verbose=True)
         datasets = reader.read()
         dataset = datasets['Channel_000']
@@ -61,15 +65,17 @@ class TestDMReader(unittest.TestCase):
 
     def test_load_wrong_file(self):
         # Test behaviour of wrong data file
-        file_name = wget.download(data_path + '/NionReader_Image_STO_HAADF.ndata')
+
+        file_name = 'NionReader_Image_STO_HAADF.ndata'
+        urllib.request.urlretrieve(data_path + file_name, file_name)
         with self.assertRaises(TypeError):
             _ = SciFiReaders.DMReader(file_name)
         os.remove(file_name)
 
     def test_load_dm3_spectrum_image(self):
         # Test if the test dm3 file can be read in correctly
-        file_name = wget.download(data_path + '/DMReader_SpectrumImage_SI-EELS.dm3')
-
+        file_name = 'DMReader_SpectrumImage_SI-EELS.dm3'
+        urllib.request.urlretrieve(data_path + file_name, file_name)
         reader = SciFiReaders.DMReader(file_name)
         datasets = reader.read()
         dataset = datasets['Channel_000']
@@ -88,7 +94,8 @@ class TestDMReader(unittest.TestCase):
 
     def test_load_dm3_image(self):
         # Test if the test dm3 file can be read in correctly
-        file_name = wget.download(data_path + '/DMReader_Image_SI-Survey.dm3')
+        file_name = 'DMReader_Image_SI-Survey.dm3'
+        urllib.request.urlretrieve(data_path + file_name, file_name)
 
         reader = SciFiReaders.DMReader(file_name)
         datasets = reader.read()

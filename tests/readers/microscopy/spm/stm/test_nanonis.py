@@ -4,8 +4,7 @@ import os
 import numpy as np
 import sidpy
 import pytest
-from pywget import wget
-
+import urllib
 
 sys.path.append("../../../../../SciFiReaders/")
 import SciFiReaders as sr
@@ -18,8 +17,8 @@ class TestNanonisDat(unittest.TestCase):
     def test_load_test_dat_file(self):
         # Test if the test dat file can be read in correctly
         file_path = 'Bias-Spectroscopy.dat'
-        wget.download(root_path + "NanonisReader_BiasSpectroscopy.dat?raw=true", out=file_path)
-
+        urllib.request.urlretrieve(root_path + "NanonisReader_BiasSpectroscopy.dat?raw=true", file_path)    
+        
         data_translator = sr.NanonisDatReader(file_path)
         datasets = data_translator.read(verbose=False)
         os.remove(file_path)
@@ -92,9 +91,7 @@ class TestNanonisSXM(unittest.TestCase):
 
     def test_load_nanonis_sxm(self):
         file_path = 'NanonisFile.sxm'
-        import pywget
-        #pywget.download(root_path + "NanonisReader_COOx_sample2286.sxm?raw=true", out=file_path)
-        pywget.download(r'https://www.dropbox.com/s/ozsdm1q83ik8gt8/NanonisReader_COOx_sample2286.sxm?dl=1', out=file_path)
+        urllib.request.urlretrieve(r'https://www.dropbox.com/s/ozsdm1q83ik8gt8/NanonisReader_COOx_sample2286.sxm?raw=true', file_path)
         reader = sr.NanonisSXMReader(file_path)
 
         datasets = reader.read()
@@ -222,7 +219,7 @@ class TestNanonis3ds(unittest.TestCase):
 
     def test_load_nanonis_3ds(self):
         file_path = 'Nanonis3ds.3ds'
-        wget.download(root_path + "NanonisReader_STS_grid_lockin.3ds?raw=true", out=file_path)
+        urllib.request.urlretrieve(root_path + "NanonisReader_STS_grid_lockin.3ds?raw=true", file_path) 
 
         reader = sr.Nanonis3dsReader(file_path)
         datasets = reader.read()

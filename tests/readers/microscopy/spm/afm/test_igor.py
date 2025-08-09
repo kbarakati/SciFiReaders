@@ -2,12 +2,12 @@ import unittest
 import sys
 import pytest
 import sidpy
-from pywget import wget
+import urllib
 import os
 import pickle
 import numpy as np
 
-sys.path.append("../../../../../SciFiReaders/")
+sys.path.append("../../../../")
 import SciFiReaders as sr
 
 root_path = "https://github.com/pycroscopy/SciFiDatasets/blob/main/data/microscopy/spm/afm/"
@@ -18,10 +18,10 @@ class TestIgorIBW(unittest.TestCase):
     # Tests the nanonis_dat reader
     def test_igor_matrix_file_cits(self):
         #Test the CITS file reads correctly
-        file_cits = '20230110-152047_ScV6Sn6-2023-01-10-STM_NANOPROBE_AtomManipulation--37_1-Aux2(V) 3_Forward_Down_Trace.ibw?raw=true'
-        file_path = os.path.join(root_path, file_cits)
+        file_cits = r"20230110-152047_ScV6Sn6-2023-01-10-STM_NANOPROBE_AtomManipulation--37_1-Aux2(V)_3_Forward_Down_Trace.ibw?raw=true"
+        file_path =root_path + file_cits
         file_out = 'cits_file.ibw'
-        wget.download(file_path, out=file_out)
+        urllib.request.urlretrieve(file_path, file_out)
         reader = sr.IgorMatrixReader(file_out)
         dataset = reader.read()
 
@@ -42,9 +42,9 @@ class TestIgorIBW(unittest.TestCase):
 
         #Load the metadata
         file_metadata = 'orig_dict.p?raw=true'
-        file_path = os.path.join(root_path, file_metadata)
+        file_path = root_path + file_metadata
         metadata_out = 'cits_metadata.p'
-        wget.download(file_path, out=metadata_out)
+        urllib.request.urlretrieve(file_path, metadata_out)
         true_metadata = pickle.load(open(metadata_out, 'rb'))
         received_metadata = dataset.original_metadata
         for key in true_metadata: 
@@ -63,10 +63,10 @@ class TestIgorIBW(unittest.TestCase):
     
     def test_igor_matrix_file_image(self):
         #Test the image file reads correctly
-        file_cits = '20230110-152047_ScV6Sn6-2023-01-10-STM_NANOPROBE_AtomManipulation--37_1-I 3_Backward_Down.ibw?raw=true'
-        file_path = os.path.join(root_path, file_cits)
+        file_cits = r'20230110-152047_ScV6Sn6-2023-01-10-STM_NANOPROBE_AtomManipulation--37_1-I_3_Backward_Down.ibw?raw=true'
+        file_path = root_path + file_cits
         file_out = 'img_file.ibw'
-        wget.download(file_path, out=file_out)
+        urllib.request.urlretrieve(file_path, file_out)
         reader = sr.IgorMatrixReader(file_out)
         dataset = reader.read()
 
@@ -87,9 +87,9 @@ class TestIgorIBW(unittest.TestCase):
 
         #Load the metadata
         file_metadata = 'image_dict.p?raw=true'
-        file_path = os.path.join(root_path, file_metadata)
+        file_path = root_path + file_metadata
         img_metadata_out = 'img_metadata.p'
-        wget.download(file_path, out=img_metadata_out)
+        urllib.request.urlretrieve(file_path, img_metadata_out)
         true_metadata = pickle.load(open(img_metadata_out, 'rb'))
         received_metadata = dataset.original_metadata
         for key in true_metadata: 
@@ -112,7 +112,7 @@ class TestIgorIBW(unittest.TestCase):
 
         file_path = 'force_ibw.ibw'
         # Download the required files
-        wget.download(root_path + "/IgorIBWReader_ForceCurve.ibw?raw=true", out=file_path)
+        urllib.request.urlretrieve(root_path + "/IgorIBWReader_ForceCurve.ibw?raw=true", file_path) 
 
         data_translator = sr.IgorIBWReader(file_path)
         datasets = data_translator.read(verbose=False)
@@ -773,7 +773,7 @@ class TestIgorIBW(unittest.TestCase):
         #Test if the IGOR Image IBW file can be read in correctly
 
         file_path = 'image_ibw.ibw'
-        wget.download(root_path + "/IgorIBWReader_ImageStack_BTFO_DSO.ibw?raw=true", out=file_path)
+        urllib.request.urlretrieve(root_path + "/IgorIBWReader_ImageStack_BTFO_DSO.ibw?raw=true", file_path)
 
         data_translator = sr.IgorIBWReader(file_path)
         datasets = data_translator.read(verbose=True)

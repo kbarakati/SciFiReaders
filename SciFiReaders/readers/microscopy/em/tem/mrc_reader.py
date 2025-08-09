@@ -17,7 +17,6 @@ import h5py
 import sys
 import numpy as np
 import dask.array as da
-from numba import njit
 import sidpy
 import mrcfile
 try:

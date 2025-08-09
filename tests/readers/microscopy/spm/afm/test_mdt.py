@@ -10,7 +10,7 @@ First Version 09/01/2023
 import sys
 import sidpy
 import numpy as np
-from pywget import wget
+import urllib
 import os
 import unittest
 
@@ -24,8 +24,9 @@ class TestMDT(unittest.TestCase):
 
     def test_mdt_file(self):
         file_path = os.path.join(root_path, 'test_mdt.mdt?raw=true')
-        file_name = wget.download(file_path)
-
+        file_name = 'test_mdt.mdt'
+        urllib.request.urlretrieve(file_path, 'test_mdt.mdt')
+        
         reader = SciFiReaders.MDTReader(file_name)
         datasets = reader.read()
 
@@ -37,7 +38,8 @@ class TestMDT(unittest.TestCase):
 
     def test_data_available(self):
         file_path = os.path.join(root_path, 'test_mdt.mdt?raw=true')
-        file_name = wget.download(file_path)
+        file_name = 'test_mdt.mdt'
+        urllib.request.urlretrieve(file_path, file_name)
 
         reader = SciFiReaders.MDTReader(file_name)
 
@@ -45,7 +47,8 @@ class TestMDT(unittest.TestCase):
 
     def test_read_image(self):
         file_path = os.path.join(root_path, 'test_mdt.mdt?raw=true')
-        file_name = wget.download(file_path)
+        file_name = 'test_mdt.mdt'
+        urllib.request.urlretrieve(file_path, file_name)
 
         reader = SciFiReaders.MDTReader(file_name)
         datasets = reader.read()
@@ -77,7 +80,8 @@ class TestMDT(unittest.TestCase):
 
     def test_read_point_cloud(self):
         file_path = os.path.join(root_path, 'test_mdt.mdt?raw=true')
-        file_name = wget.download(file_path)
+        file_name = 'test_mdt.mdt'
+        urllib.request.urlretrieve(file_path, file_name)
 
         reader = SciFiReaders.MDTReader(file_name)
         datasets = reader.read()

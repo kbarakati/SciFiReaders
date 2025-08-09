@@ -1,8 +1,9 @@
 import unittest
+import urllib.request
 import numpy as np
 import sys
 import os
-from pywget import wget
+import urllib
 import sidpy
 
 sys.path.insert(0, "../../../../SciFiReaders/")
@@ -19,14 +20,14 @@ class TestUSIDReader(unittest.TestCase):
     
 
     def test_data_available(self):
-        wget.download(url=r'https://www.dropbox.com/scl/fi/ggvatabim4zgbcie4yddm/HfOx_-2V_0001.h5?rlkey=rzwdutxnyb0gwu2cw3cmrjst4&dl=1', out='relax_test_data.h5')
+        urllib.request.urlretrieve('https://www.dropbox.com/scl/fi/ggvatabim4zgbcie4yddm/HfOx_-2V_0001.h5?rlkey=rzwdutxnyb0gwu2cw3cmrjst4&dl=1', 'relax_test_data.h5')
         reader = Usid_reader('relax_test_data.h5')
         self.assertIsInstance(reader, sidpy.Reader)
 
     
     def test_read_ndim_issue(self):
-        wget.download(url=r'https://www.dropbox.com/scl/fi/ggvatabim4zgbcie4yddm/HfOx_-2V_0001.h5?rlkey=rzwdutxnyb0gwu2cw3cmrjst4&dl=1', out='relax_test_data.h5')
-        reader = Usid_reader('relax_test_data.h5')
+        urllib.request.urlretrieve('https://www.dropbox.com/scl/fi/ggvatabim4zgbcie4yddm/HfOx_-2V_0001.h5?rlkey=rzwdutxnyb0gwu2cw3cmrjst4&dl=1', 'relax_test_data2.h5')
+        reader = Usid_reader('relax_test_data2.h5')
         datasets = reader.read()
         assert isinstance(datasets, Dataset)
         h5_files = glob.glob('*.h5')

@@ -2,7 +2,7 @@ import unittest
 import sys
 import os
 import sidpy
-from pywget import wget
+import urllib
 from matplotlib import pyplot as plt
 
 
@@ -40,7 +40,7 @@ class TestWSxM(unittest.TestCase):
         for file_i in data_files[file_type]:
             if not os.path.exists(file_i):
                 print(root_path + file_i + "?raw=true")
-                wget.download(root_path + file_i + "?raw=true", out=file_i) 
+                urllib.request.urlretrieve(root_path + file_i + "?raw=true", file_i)
     
     def clear_files(self, file_type):
         for file_i in data_files[file_type]:
