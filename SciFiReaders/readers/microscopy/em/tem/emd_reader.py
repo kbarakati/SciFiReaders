@@ -17,6 +17,7 @@ import numpy as np
 import dask.array as da
 from numba import njit
 import sidpy
+from typing import Any
 try:
     from tqdm.auto import tqdm
     tqdm_available = True
@@ -52,11 +53,31 @@ class EMDReader(sidpy.Reader):
     datasets: dict
         dictionary of sidpy.Datasets
     """
-    def __init__(self, file_path, sum_frames=False, no_eds=False):
-        super().__init__(file_path)
+    def __init__(self, file_path:str, sum_frames:bool=False, no_eds:bool=False):
+        """
+        Initialize an EMDReader instance.
+
+        Parameters:
+            file_path (str): Path to the HDF5 (.emd) file to be read.
+            sum_frames (bool, optional): If True, sum all frames in the dataset. Defaults to False.
+            no_eds (bool, optional): If True, disables EDS (Energy Dispersive Spectroscopy) data handling. Defaults to False.
+
+        Attributes:
+            _h5_file (h5py.File): The opened HDF5 file object.
+            datasets (dict): Dictionary to store dataset references.
+            channel_number (int): The current channel number (default is 0).
+            key (str): Formatted string key for the current channel.
+            data_array (ndarray or None): Array to hold data from the file.
+            metadata (dict or None): Metadata extracted from the file.
+            label_dict (dict): Dictionary for label mapping.
+            no_eds (bool): Indicates if EDS data handling is disabled.
+            sum_frames (bool): Indicates if frames should be summed.
+            number_of_frames (int): Number of frames in the dataset (default is 1).
+        """
+        super().__init__(file_path: str)
 
         # Let h5py raise an OS error if a non-HDF5 file was provided
-        self._h5_file = h5py.File(file_path, mode='r+')
+        self._h5_file: h5py.File = h5py.File(file_path, mode='r+')
 
         self.datasets = {}
         self.channel_number = 0
@@ -84,7 +105,7 @@ class EMDReader(sidpy.Reader):
         else:
             return False
 
-    def read(self, eds_stream=False, bin=2):
+    def read(self, eds_stream:bool=False, bin:int=2):
         """
         Reads all available datasets in FEI Velox style hdf5 files with .edm
 
@@ -108,12 +129,13 @@ class EMDReader(sidpy.Reader):
 
         self.bin = bin
         use_tqdm = False
-        for key in self._h5_file['Data']:
+        for key in self._h5_file['Data'].keys():  # type: str   
             if key == 'SpectrumStream':
                 number_of_datasets += len(self._h5_file['Data']['SpectrumStream'].keys())
         if number_of_datasets > 1:
             progress_bar = tqdm(total=number_of_datasets)  # Initialise
             use_tqdm = tqdm_available
+        
         for key in self._h5_file['Data']:
             self.image_key = 'None'
             self._parse_image_display()
@@ -223,12 +245,12 @@ class EMDReader(sidpy.Reader):
                                                                    dimension_type='spectral'))
                 
     
-    def get_eds_spectrum(self):
-        acquisition = self.metadata['AcquisitionSettings']
+    def get_eds_spectrum(self) -> np.ndarray:
+        acquisition: str = self.metadata['AcquisitionSettings']
         
         size_x = 1
         size_y = 1
-        if 'Scan' in self.metadata:
+        if self.metadata is not None and 'Scan' in self.metadata:
             scan = self.metadata['Scan']
             if 'ScanArea' in scan:
                 size_x = int(float(scan['ScanSize']['width']) * float(scan['ScanArea']['right'])-float(scan['ScanSize']['width']) * float(scan['ScanArea']['left']))
@@ -324,13 +346,13 @@ class EMDReader(sidpy.Reader):
         self.data_array=np.zeros([1,1])
 
     def extract_crucial_metadata(self, key):
-        metadata = self.datasets[key].original_metadata
-       
-        experiment = {'detector': metadata['BinaryResult']['Detector'],
+        metadata: dict = self.datasets[key].original_metadata
+        experiment: dict[str, Any] = {'detector': metadata['BinaryResult']['Detector'],
                       'acceleration_voltage': float(metadata['Optics']['AccelerationVoltage']),
                       'microscope': metadata['Instrument']['InstrumentClass'],
                       'start_date_time': int(metadata['Acquisition']['AcquisitionStartDatetime']['DateTime']),
                       'collection_angle': 0.0,
+                      'convergence_angle': 0.0}
                       'convergence_angle': 0.0}
         if metadata['Optics']['ProbeMode'] == "1":
             experiment['probe_mode'] = "convergent"
