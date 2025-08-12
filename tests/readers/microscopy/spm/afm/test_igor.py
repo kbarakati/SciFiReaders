@@ -78,7 +78,7 @@ class TestIgorIBW(unittest.TestCase):
         true_dd = 'I 3 37-1 Backward Down (A)'
         assert dataset.data_descriptor==true_dd, "Data descriptor was expected to be {} \
         but received {}".format(true_dd, dataset.data_descriptor)
-        dimension_sizes = [58,256]
+        dimension_sizes = [256,58]
         dimension_types = [sidpy.DimensionType.SPATIAL, sidpy.DimensionType.SPATIAL]
         for dim in dataset._axes:
             dimension = dataset._axes[dim]
