@@ -91,6 +91,6 @@ jobs:
       env:
         PYPI_TOKEN_PASSWORD: ${{ secrets.API_TOKEN_SCIFIREADERS }}
       run: |
-        pip install wheel twine
-        python setup.py sdist bdist_wheel
+        pip install build twine
+        python -m buil
         twine upload --username "__token__" --password $PYPI_TOKEN_PASSWORD dist/*
