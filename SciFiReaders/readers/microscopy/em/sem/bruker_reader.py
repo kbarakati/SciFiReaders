@@ -52,7 +52,9 @@ def get_bruker_dictionary(filename):
                             if pos is not None:
                                 over['pos_x'] = int(pos.find('./PosX').text)
                                 over['pos_y'] = int(pos.find('./PosY').text)
+                                over['position'] = [over['pos_x'], over['pos_y']]
                                 over['type'] = 'spot'
+                                over['label'] = neighbor.attrib['Name']
             if 'TRTImageData' in neighbor.attrib['Type']:
                 _ = neighbor.find("./ClassInstance[@Type='TRTCrossOverlayElement']")
                 image = neighbor
@@ -173,8 +175,8 @@ def get_image(tags, key=0):
                                              quantity=quantity,
                                              dimension_type=dimension_type))
 
-    dataset.metadata['experiment'] = tags['esma'].copy()
-    dataset.metadata['overlay'] = tags['overlay']['image1'].copy()
+    dataset.metadata['experiment'] = tags.get('esma', {}).copy()
+    dataset.metadata['annotations'] = tags.get('overlay', {}).get('image1', {}).copy()
     return dataset
 
 

@@ -262,7 +262,7 @@ class DMReader(sidpy.Reader):
 
     def set_data_type(self, dataset):
         """Sets the data type of the dataset based on its shape and metadata."""
-        self.spectral_dim = spectral_dim = len(dataset.get_spectral_dimension()) > 0
+        self.spectral_dim = spectral_dim = len(dataset.get_spectral_dims()) > 0
 
         dataset.data_type = 'unknown'
         if dataset.original_metadata.get('ImageTags', {}).get('SI', {}):
