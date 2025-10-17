@@ -671,7 +671,7 @@ class Frame:
 
 
         #parsing of index.xml string
-        root = ET.frombuffer(xmml)[0]
+        root = ET.fromstring(xmml)[0]
         self.version = root.attrib['version']
         #read general data about axis dimensions
         for child in root:
@@ -708,7 +708,7 @@ class Frame:
         #Actually, number of metadata blocks == number of points, but looks like they are absolutely identical
         self._file.shift_position(_block_headers[-2][2])
         xml_metadata = self._file.read(_block_headers[-1][1]).decode('utf-16')
-        element = ET.frombuffer(xml_metadata)
+        element = ET.fromstring(xml_metadata)
         self.original_metadata = self.xml_to_dict(element)
         self.title = self.original_metadata['Parameters']['Name']['Name']
         #original metadata
