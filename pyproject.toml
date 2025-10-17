@@ -40,7 +40,7 @@ dependencies = [
     "pyUSID",
     "gdown",
     "mrcfile",
-    "SciFiReaders @ git+https://github.com/pycroscopy/SciFiReaders.git#egg=SciFiReaders[gwyddion]"
+    "SciFiReaders @ git+https://github.com/pycroscopy/SciFiReaders.git"
 ]
 
 [project.optional-dependencies]
