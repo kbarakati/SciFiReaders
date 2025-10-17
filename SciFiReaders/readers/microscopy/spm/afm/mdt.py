@@ -426,7 +426,6 @@ class Frame:
             element = ET.fromstring(xml_metadata)
             original_metadata = self.xml_to_dict(element)
 
-
         #don't understand self.info, self.spec, self.source_info
         if _info_size != 0:
             self.info = self._file.read(_info_size)
