@@ -139,8 +139,8 @@ def get_bruker_dictionary(filename):
                                 if result_tag['Atom'] not in tags['spectrum'][spectrum_number]['results']:
                                     tags['spectrum'][spectrum_number]['results'][result_tag['Atom']] = {}
                                 tags['spectrum'][spectrum_number]['results'][result_tag['Atom']].update(result_tag)
-                        tags['spectrum'][spectrum_number]['data'] = np.fromstring(spectrum.find('./Channels').text,
-                                                                                  dtype='Q', sep=",")
+                        tags['spectrum'][spectrum_number]['data'] = np.frombuffer(spectrum.find('./Channels').text,
+                                                                                  dtype='np.int16', sep=",")
                         spectrum_number += 1
     return tags
 
@@ -201,7 +201,7 @@ def get_spectrum(tags, key=0):
 
     dataset.metadata['experiment'] = tags['esma'].copy()
     acceleration_voltage = float(tags.get('experiment', {}).get('PrimaryEnergy', 0))*1000.
-    tags['experiment']['acceleration_voltage'] =  acceleration_voltage
+    dataset.metadata['experiment']['acceleration_voltage'] =  acceleration_voltage
     dataset.metadata['EDS'] = {'detector': tags.get('detector', '')}
     dataset.metadata['EDS']['results'] = {}
     for  result in spectrum.get('results', {}).values():
