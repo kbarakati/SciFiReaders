@@ -3,11 +3,8 @@ import sidpy
 import SciFiReaders as sr
 import urllib
 import os
-try:
-    import gwyfile
-except ImportError:
-    import pip
-    pip.main(['install', 'gwyfile[pycroscopy]'])
+import gwyfile
+
 root_path = "https://github.com/pycroscopy/SciFiDatasets/blob/main/data/microscopy/spm/afm/"
 
 @pytest.fixture
