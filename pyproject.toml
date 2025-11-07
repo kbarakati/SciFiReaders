@@ -40,7 +40,7 @@ dependencies = [
     "gdown",
     "mrcfile",
     "pycroscopy[gwyfile]",
-    "scipy > 2.0"
+    "scipy >= 1.16"
 ]
 
 [project.optional-dependencies]
